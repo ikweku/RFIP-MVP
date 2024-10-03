@@ -1,0 +1,26 @@
+package main
+
+import (
+	"fmt"
+	"github.com/ikweku/RFIP-MVP/pkg/blockchain"
+)
+
+func main() {
+	bc := blockchain.NewBlockchain()
+
+	tx1 := blockchain.NewTransaction("Alice", "Bob", 50)
+	tx2 := blockchain.NewTransaction("Bob", "Charlie", 30)
+	bc.AddBlock([]*blockchain.Transaction{tx1, tx2})
+
+	tx3 := blockchain.NewTransaction("Charlie", "David", 20)
+	tx4 := blockchain.NewTransaction("David", "Alice", 10)
+	bc.AddBlock([]*blockchain.Transaction{tx3, tx4})
+
+	for _, block := range bc.Blocks() {
+		fmt.Printf("Prev. hash: %x\n", block.PrevBlockHash)
+		fmt.Printf("Data: %v\n", block.Transactions)
+		fmt.Printf("Hash: %x\n", block.Hash)
+		fmt.Println()
+	}
+}
+
